@@ -45,8 +45,7 @@ class UserController extends Controller
           ]);
           
           $validatedData['password'] = bcrypt($validatedData['password']);
-
-          dd($validatedData);
+          $validatedData['role_id'] = $validatedData['role'];
           
           User::create($validatedData);
           

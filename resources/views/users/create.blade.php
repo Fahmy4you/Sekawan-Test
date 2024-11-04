@@ -5,19 +5,27 @@
 <form action="{{ route('user.createPost') }}" method="post" class="formData">
     @csrf
     <div class="inputDiv">
-        <input type="text" placeholder="Nama..." name="name" class="error" />
+        <input type="text" placeholder="Nama..." name="name" @error('name') style="--aHover: #D32F2F;" @enderror value="{{ old('name') }}"/>
             <span class="focus"></span>
-    </div>
-    <p>Name is required</p>
-    <div class="inputDiv">
-        <input type="text" placeholder="Email..." name="email" />
+            @error('name')
+                <p>{{ $message }}</p>
+            @enderror
+        </div>
+        <div class="inputDiv">
+            <input type="text" placeholder="Email..." name="email" @error('email') style="--aHover: #D32F2F;" @enderror value="{{ old('email') }}"/>
             <span class="focus"></span>
-    </div>
-    <div class="inputDiv">
-        <input type="password" placeholder="Password..." name="password" />
+            @error('email')
+                <p>{{ $message }}</p>
+            @enderror
+        </div>
+        <div class="inputDiv">
+            <input type="password" placeholder="Password..." name="password" @error('password') style="--aHover: #D32F2F;" @enderror />
             <span class="focus"></span>
-    </div>
-    <select name="role" id="">
+            @error('password')
+                <p>{{ $message }}</p>
+            @enderror
+        </div>
+        <select name="role" id="" @error('role') style="--aHover: #D32F2F;" @enderror>
         @foreach($roles as $role)
             <option value="{{ $role->id }}">{{ $role->role }}</option>
         @endforeach

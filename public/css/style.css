@@ -778,6 +778,13 @@ body{
     color: var(--text);
 
   }
+
+.formData p {
+    font-size: 12px;
+    margin: 2px;
+    color: var(--danger);
+}
+
 .judulPage {
     margin: 20px 0;
     color: var(--dark);
@@ -795,4 +802,6 @@ body{
     color: var(--text);
     font-size: 0.875rem;
   }
+
+
   
