@@ -19,6 +19,7 @@
   --alert: rgb(14,165,233, 0.3);
   --text: rgb(15 23 42);
   --alertDanger: rgba(231, 44, 104, 0.5);
+  --textPlaceHolder: rgba(15, 23, 42, 0.758);
 }
 
 *{
@@ -49,9 +50,11 @@ body.dark{
     --grey: #25252c;
     --dark: #fbfbfb;
     --text: rgb(241 245 249);
+    --textPlaceholder: rgba(241, 245, 249, 0.566);
     --aHover: rgb(139 92 246);
     --alert: rgba(139,92,246,0.2);
     --alertDanger: rgba(221, 40, 97, 0.3);
+    color: var(--text);
 }
 
 body{
@@ -516,6 +519,9 @@ body{
     color: var(--light);
     border-radius: 20px;
     font-weight: 700;
+    outline: none;
+    border: none;
+    cursor: pointer;
 }
 
 .content main .bottom-data .orders table tr td .status.completed{
@@ -699,7 +705,7 @@ body{
 }
 .formData .inputDiv input::placeholder
 {
-  color: var(--text);
+  color: var(--textPlaceholder);
 }
 .formData .inputDiv input:hover,
 .formData .input-gabung .inputDiv input:hover,
@@ -784,6 +790,11 @@ body{
     margin: 2px;
     color: var(--danger);
 }
+.formData p.info {
+    font-size: 12px;
+    margin: 2px;
+    color: var(--text);
+}
 
 .judulPage {
     margin: 20px 0;
@@ -803,5 +814,7 @@ body{
     font-size: 0.875rem;
   }
 
-
+.formDelete {
+    display: inline;
+}
   

@@ -33,8 +33,12 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->role->role }}</td>
                     <td>
-                        <a class="status completed">Edit</a>
-                        <a class="status danger">Delete</a>
+                        <a class="status completed" href="{{ route('user.edit', ['user' => $user->id]) }}">Edit</a>
+                        <form class="formDelete" action="{{ route('user.hapus', ['user' => $user->id]) }}" method="post">
+                            @method('delete')
+                            @csrf
+                            <button onclick="confirm('Apakah Anda Yakin Menghapus Data {{$user->name}}')" type="submit" class="status danger">Delete</a>
+                        </form>
                     </td>
                 </tr>
                 @endforeach

@@ -14,10 +14,34 @@ class KendaraanController extends Controller
             "title" => "Kendaraan | Home",
             "kendaraan" => Kendaraan::all(),
             "aAtas" => [
-                'url' => route('user.create'),
+                'url' => route('kendaraan.create'),
                 'icon' => 'bx bx-plus',
                 'text' => "Tambah Data",
             ],
           ]);
+    }
+
+    public function create() {
+        return view('kendaraan.create', [
+            "active" => "kendaraan",
+            "path" => ["Kendaraan", "Create"],
+            "title" => "Kendaraan | Create",
+            "aAtas" => [
+                'url' => route('kendaraan.home'),
+                'icon' => 'bx bx-left-arrow-alt',
+                'text' => "Back To Table",
+            ],
+          ]);
+    }
+
+    public function createPost(Request $request) {
+        $validatedData = $request->validate([
+            'nama' => 'required|max:100|unique:kendaraans',
+            'plat' => 'required|max:50|unique:kendaraans',
+          ]);
+          
+          Kendaraan::create($validatedData);
+          
+          return redirect()->route('kendaraan.home')->with('success', 'Kendaraan Baru Ditambahkan');
     }
 }

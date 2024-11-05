@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Pemesanan;
 
 class UserController extends Controller
 {
@@ -13,7 +14,11 @@ class UserController extends Controller
             "active" => "users",
             "path" => ["Users", "Home"],
             "title" => "Users | Home",
-            "users" => User::all(),
+            "users" => User::join('roles', 'users.role_id', '=', 'roles.id')
+                        ->where('roles.role', '!=', 'Super')
+                        ->orderBy("roles.id")
+                        ->select('users.*')
+                        ->get(),
             "aAtas" => [
                 'url' => route('user.create'),
                 'icon' => 'bx bx-plus',
@@ -35,20 +40,73 @@ class UserController extends Controller
             ],
           ]);
     }
-
+    
     public function createPost(Request $request) {
         $validatedData = $request->validate([
             'name' => 'required|max:100',
             'email' => 'required|unique:users',
-            'password' => 'required',
-            'role' => 'required',
-          ]);
-          
-          $validatedData['password'] = bcrypt($validatedData['password']);
-          $validatedData['role_id'] = $validatedData['role'];
-          
-          User::create($validatedData);
-          
-          return redirect()->route('user.home')->with('success', 'User Baru Ditambahkan');
+            'password' => 'required|min:8',
+            'role_id' => 'required',
+        ]);
+        
+        $validatedData['password'] = bcrypt($validatedData['password']);
+        
+        User::create($validatedData);
+        
+        return redirect()->route('user.home')->with('success', 'User Baru Ditambahkan');
     }
+
+    public function edit(User $user) {
+        return view('users.edit', [
+            "active" => "users",
+            "path" => ["Users", "Edit"],
+            "title" => "Users | Edit",
+            "user" => $user,
+            "roles" => Role::all(),
+            "aAtas" => [
+                'url' => route('user.home'),
+                'icon' => 'bx bx-left-arrow-alt',
+                'text' => "Back To Table",
+            ],
+        ]);
+    }
+
+    public function editPost(Request $request, User $user) {
+        $validatedData = $request->validate([
+            'name' => 'required|max:100',
+            'email' => 'required|unique:users,email,' . $user->id,
+            'role_id' => 'required',
+            'password' => 'nullable|min:8',
+        ]);
+
+        if (empty($validatedData['password'])) {
+            $validatedData['password'] = $user->password;
+        } else {
+            $validatedData['password'] = bcrypt($validatedData['password']);
+        }
+
+        if($validatedData['role_id'] != $user->role->id) {
+            Pemesanan::where("user_id" , $user->id)->delete();
+            
+        }
+
+        User::where('id', $user->id)
+            ->update($validatedData);
+      
+        return redirect()->route('user.home')->with('success', 'User Berhasil Dirubah');
+        
+    }
+    
+    public function hapus(User $user) {
+        $pemesanan = Pemesanan::where("user_id", $user->id);
+        if($user->role->role == "Driver") {
+            if($pemesanan->exists()) {
+                $pemesanan->delete();
+            }
+        }
+
+        User::where("id", $user->id)->delete();
+        return redirect()->route('user.home')->with('success', 'User Berhasil Dihapus');
+    }
+
 }

@@ -25,9 +25,11 @@
                 <p>{{ $message }}</p>
             @enderror
         </div>
-        <select name="role" id="" @error('role') style="--aHover: #D32F2F;" @enderror>
+        <select name="role_id" id="" @error('role') style="--aHover: #D32F2F;" @enderror>
         @foreach($roles as $role)
+            @if($role->role != "Super")
             <option value="{{ $role->id }}">{{ $role->role }}</option>
+            @endif
         @endforeach
     </select>
     <div class="buttonDiv">
