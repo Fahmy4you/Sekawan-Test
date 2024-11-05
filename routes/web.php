@@ -17,6 +17,8 @@ Route::post('/user/create', [UserController::class, 'createPost'])->name("user.c
 
 // ROLE ROUTE
 Route::get('/role/', [RoleController::class, 'index'])->name("role.home");
+Route::get('/role/create', [RoleController::class, 'create'])->name("role.create");
+Route::post('/role/create', [RoleController::class, 'createPost'])->name("role.createPost");
 
 // KENDARAAN ROUTE
 Route::get('/kendaraan/', [KendaraanController::class, 'index'])->name("kendaraan.home");

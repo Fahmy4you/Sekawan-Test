@@ -1,6 +1,12 @@
 @extends('layouts.main')
 
 @section('content')
+@if(session()->has('success'))
+<div class="successAlert">
+    <p>{{ session('success') }}</p>
+</div>
+@endif
+
 <div class="bottom-data">
     <div class="orders">
         <div class="header">

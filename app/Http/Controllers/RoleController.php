@@ -14,10 +14,34 @@ class RoleController extends Controller
             "title" => "Role | Home",
             "role" => Role::all(),
             "aAtas" => [
-                'url' => route('user.create'),
+                'url' => route('role.create'),
                 'icon' => 'bx bx-plus',
                 'text' => "Tambah Data",
             ],
           ]);
+    }
+    
+    public function create() {
+        return view('role.create', [
+            "active" => "role",
+            "path" => ["Role", "Create"],
+            "title" => "Role | Create",
+            "roles" => Role::all(),
+            "aAtas" => [
+                'url' => route('role.home'),
+                'icon' => 'bx bx-left-arrow-alt',
+                'text' => "Back To Table",
+            ],
+          ]);
+    }
+
+    public function createPost(Request $request) {
+        $validatedData = $request->validate([
+            'role' => 'required|max:50|unique:role',
+          ]);
+          
+          Role::create($validatedData);
+          
+          return redirect()->route('role.home')->with('success', 'Role Baru Ditambahkan');
     }
 }
