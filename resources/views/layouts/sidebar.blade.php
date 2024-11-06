@@ -15,10 +15,10 @@
         </ul>
         <ul class="side-menu">
             <li>
-                <a href="#" class="logout">
-                    <i class='bx bx-log-out-circle'></i>
-                    Logout
-                </a>
+                <form action="{{ route('auth.logout') }}" method="post">
+                    @csrf
+                    <button class="logout"><i class='bx bx-log-out-circle'></i> Logout</button>
+                </form>
             </li>
         </ul>
     </div>

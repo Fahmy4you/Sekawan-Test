@@ -10,10 +10,11 @@
     @endif
     @if(session()->has('error'))
     <div class="successAlert auth error">
-         <p> session('error') </p>
+         <p>{{ session('error') }}</p>
     </div>
     @endif
-    <form action="">
+    <form action="{{ route('auth.loginPost') }}" method="post">
+        @csrf
         <div class="inputDiv">
             <input type="email" placeholder="Email..." name="email" @error('email') style="--aHover: #D32F2F;" @enderror>
             @error('email')

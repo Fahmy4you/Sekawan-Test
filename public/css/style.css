@@ -242,6 +242,7 @@ body.auth .card p a {
     z-index: -1;
 }
 
+.sidebar .side-menu li .logout,
 .sidebar .side-menu li a{
     width: 100%;
     height: 100%;
@@ -256,15 +257,18 @@ body.auth .card p a {
     transition: all 0.3s ease;
 }
 
+.sidebar .side-menu li.active .logout,
 .sidebar .side-menu li.active a{
     color: var(--success);
 }
 
+.sidebar.close .side-menu li .logout,
 .sidebar.close .side-menu li a{
     width: calc(48px - (4px * 2));
     transition: all 0.3s ease;
 }
 
+.sidebar .side-menu li .logout .bx,
 .sidebar .side-menu li a .bx{
     min-width: calc(60px - ((4px + 6px) * 2));
     display: flex;
@@ -272,8 +276,11 @@ body.auth .card p a {
     justify-content: center;
 }
 
-.sidebar .side-menu li a.logout{
+.sidebar .side-menu li .logout,
+.logoutNav {
     color: var(--danger);
+    background: transparent;
+    border: none;
 }
 
 .content{
@@ -320,45 +327,6 @@ body.auth .card p a {
 .content nav .bx.bx-menu{
     cursor: pointer;
     color: var(--dark);
-}
-
-.content nav form{
-    max-width: 400px;
-    width: 100%;
-    margin-right: auto;
-}
-
-.content nav form .form-input{
-    display: flex;
-    align-items: center;
-    height: 36px;
-}
-
-.content nav form .form-input input{
-    flex-grow: 1;
-    padding: 0 16px;
-    height: 100%;
-    border: none;
-    background: var(--grey);
-    border-radius: 36px 0 0 36px;
-    outline: none;
-    width: 100%;
-    color: var(--dark);
-}
-
-.content nav form .form-input button{
-    width: 80px;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: var(--primary);
-    color: var(--light);
-    font-size: 18px;
-    border: none;
-    outline: none;
-    border-radius: 0 36px 36px 0;
-    cursor: pointer;
 }
 
 .content nav .notif{

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -12,12 +13,19 @@ class AuthController extends Controller
             "title" => "LOGIN",
         ]);
     }
-    public function loginPost() {
+    public function loginPost(Request $request) {
         $validatedData = $request->validate([
             'email' => 'required|email|email:rfc,dns',
             'password' => 'required',
         ]);
 
+        if(Auth::attempt($validatedData)){
+            $request->session()->regenerate();
+            return redirect()->intended(route('dashboard.home'));
+            
+        }
+          
+        return back()->with('error', 'Login Gagal Coba Periksa Data Anda Kembali');
         
     }
 
@@ -39,5 +47,14 @@ class AuthController extends Controller
         User::create($validatedData);
         
         return redirect()->route('auth.login')->with('success', 'Register Berhasil Silahkan Login');
+    }
+
+    public function logout(Request $request) {
+        Auth::logout();
+        
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
+        return redirect()->route('auth.login')->with('success', 'Anda Berhasil Log Out');
     }
 }

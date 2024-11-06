@@ -7,9 +7,10 @@
                 <i class='bx bx-bell'></i>
                 <span class="count">12</span>
             </a>
-            <a href="#" class="profile">
-                <img src="{{ asset('img/logo.png') }}">
-            </a>
+            <form action="{{ route('auth.logout') }}" method="post">
+                @csrf
+                <button class="logoutNav"><i class='bx bx-log-out-circle'></i></button>
+            </form>
         </nav>
 
         <!-- End of Navbar -->
