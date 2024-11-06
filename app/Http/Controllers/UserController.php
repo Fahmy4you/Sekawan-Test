@@ -44,7 +44,7 @@ class UserController extends Controller
     public function createPost(Request $request) {
         $validatedData = $request->validate([
             'name' => 'required|max:100',
-            'email' => 'required|unique:users',
+            'email' => 'required|unique:users|email:rfc,dns',
             'password' => 'required|min:8',
             'role_id' => 'required',
         ]);
@@ -74,7 +74,7 @@ class UserController extends Controller
     public function editPost(Request $request, User $user) {
         $validatedData = $request->validate([
             'name' => 'required|max:100',
-            'email' => 'required|unique:users,email,' . $user->id,
+            'email' => 'required|email:rfc,dns|unique:users,email,' . $user->id,
             'role_id' => 'required',
             'password' => 'nullable|min:8',
         ]);

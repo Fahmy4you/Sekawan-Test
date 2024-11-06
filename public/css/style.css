@@ -5,6 +5,7 @@
     --primary: #1976D2;
     --light-primary: #CFE8FF;
     --grey: #eee;
+    --inputLogin: #ddd7d7;
     --dark-grey: #AAAAAA;
     --dark: #363949;
     --danger: #D32F2F;
@@ -14,12 +15,13 @@
     --success: #388E3C;
     --light-success: #BBF7D0;
     --inputHeight: 40px;
-  --textareaHeight: 100px;
+
   --aHover: rgb(14,165,233);
   --alert: rgb(14,165,233, 0.3);
   --text: rgb(15 23 42);
   --alertDanger: rgba(231, 44, 104, 0.5);
-  --textPlaceHolder: rgba(15, 23, 42, 0.758);
+  --textPlaceHolder: rgba(15, 23, 42, 0.5);
+  --shadow: rgba(15, 23, 42, 0.3);
 }
 
 *{
@@ -48,9 +50,11 @@ html{
 body.dark{
     --light: #181a1e;
     --grey: #25252c;
+    --inputLogin: #1d1d21;
     --dark: #fbfbfb;
     --text: rgb(241 245 249);
-    --textPlaceholder: rgba(241, 245, 249, 0.566);
+    --textPlaceholder: rgba(241, 245, 249, 0.5);
+    --shadow: rgba(241, 245, 249, 0.3);
     --aHover: rgb(139 92 246);
     --alert: rgba(139,92,246,0.2);
     --alertDanger: rgba(221, 40, 97, 0.3);
@@ -60,6 +64,96 @@ body.dark{
 body{
     background: var(--grey);
     overflow-x: hidden;
+}
+
+/* AUTH */
+body.auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+body.auth .card {
+    background-color: var(--light);
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 20px var(--shadow);
+}
+body.auth .card h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+body.auth .card form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 20px;
+}
+body.auth .card .inputDiv input {
+    border-radius: 20px;
+    padding: 10px 20px;
+    width: 500px;
+    border: none;
+    outline: none;
+    border: 1.5px solid transparent;
+    background: var(--inputLogin);
+    color: var(--text);
+}
+body.auth .card .inputDiv input::placeholder
+{
+  color: var(--textPlaceHolder);
+}
+body.auth.dark .card .inputDiv input::placeholder
+{
+  color: rgba(241, 245, 249, 0.5);
+}
+body.auth .card .inputDiv input:hover
+{
+  border: 1.5px solid var(--aHover);
+  color: var(--text);
+}
+body.auth .card .inputDiv p
+{
+  margin: -1px 0 -10px 5px;
+  text-align: start;
+  color: var(--danger);
+}
+
+body.auth .card .button button
+{
+  padding: 10px 40px;
+  background: transparent;
+  outline: none;
+  border: none;
+  border: 1px solid var(--aHover);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all .3s ease-in-out;
+  color: var(--text);
+  margin-top: 10px;
+  letter-spacing: 1.5px;
+  font-weight: 500;
+  text-align: center;
+}
+body.auth .card .button button:hover {
+    background: var(--aHover);
+    color: #ddd;
+}
+body.auth .card .button button:active {
+    background: var(--aHover);
+    transform: scale(.9);
+}
+body.auth .card p {
+    font-size: 12.5px;
+    text-align: center;
+    margin-top: 12px;
+    letter-spacing: 1px;
+}
+body.auth .card p a {
+    text-decoration: underline;
+    color: var(--aHover);
 }
 
 .sidebar{
@@ -522,6 +616,7 @@ body{
     outline: none;
     border: none;
     cursor: pointer;
+    margin: 0 3px;
 }
 
 .content main .bottom-data .orders table tr td .status.completed{
@@ -594,6 +689,13 @@ body{
         left: 200px;
     }
 
+    body.auth .card {
+        padding: 20px 30px;
+    }
+    body.auth .card .inputDiv input {
+        width: 400px;
+    }
+
 }
 
 @media screen and (max-width: 576px) {
@@ -648,6 +750,13 @@ body{
 
     .content main .bottom-data .reminders .task-list{
         min-width: 340px;
+    }
+
+    body.auth .card {
+        padding: 20px 30px;
+    }
+    body.auth .card .inputDiv input {
+        width: 300px;
     }
 
 }
@@ -707,16 +816,12 @@ body{
 {
   color: var(--textPlaceholder);
 }
-.formData .inputDiv input:hover,
-.formData .input-gabung .inputDiv input:hover,
-.formData .inputDiv textarea:hover 
+.formData .inputDiv input:hover
 {
   border: 1.5px solid var(--aHover);
   color: var(--text);
 }
-.formData .inputDiv input:focus + span,
-.formData .input-gabung .inputDiv:focus + span,
-.formData .inputDiv textarea:focus + span 
+.formData .inputDiv input:focus + span
 {
   width: 100%;
 }
@@ -808,6 +913,18 @@ body{
     padding: 0.5rem 0.75rem;
     margin-top: 10px;
   }
+.successAlert.auth {
+    font-size: 14px;
+    margin-top: 0;
+    padding: 0;
+    margin-bottom: 10px;
+}
+.successAlert.auth.error {
+    background: var(--alertDanger);
+}
+.successAlert.auth p {
+    padding: 5px 0;
+}
   
   .successAlert p {
     color: var(--text);
@@ -818,3 +935,37 @@ body{
     display: inline;
 }
   
+body.auth .iconMode {
+    background: var(--aHover);
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border: 0;
+    border-radius: 100%;
+    box-shadow: 5px 5px 5px var(--shadow);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+body.auth .iconMode i {
+    position: absolute;
+    font-size: 20px;
+    opacity: 0;
+    transition: all .3s ease-in-out;
+  }
+body.auth .iconMode i:nth-child(1) {
+    opacity: 1;
+    transform: rotate(360deg);
+  }
+body.auth .iconMode.active i:nth-child(1) {
+    opacity: 0;
+    transform: rotate(0deg);
+  }
+body.auth .iconMode.active i:nth-child(2) {
+    opacity: 1;
+    transform: rotate(360deg);
+    color: var(--textWhite);
+  }

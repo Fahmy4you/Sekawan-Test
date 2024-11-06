@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Pemesanan;
-use App\Models\User;
-use App\Models\Kendaraan;
+use App\Models\{Pemesanan, User, Kendaraan, Riwayat};
 
 class PemesananController extends Controller
 {
@@ -32,7 +30,7 @@ class PemesananController extends Controller
                         ->whereNull('pemesanans.id')
                         ->select('users.*')
                         ->whereHas('role', function ($query) {
-                            $query->where('role', 'Driver');
+                            $query->where('id', '1');
                         })
                         ->get(),
             "kendaraan" => Kendaraan::leftJoin('pemesanans', 'kendaraans.id', '=', 'pemesanans.kendaraan_id')
@@ -58,5 +56,23 @@ class PemesananController extends Controller
           Pemesanan::create($validatedData);
           
           return redirect()->route('pesanan.home')->with('success', 'Pesanan Baru Ditambahkan');
+    }
+
+    public function setuju(Pemesanan $pemesanan) {
+        Pemesanan::where("id", $pemesanan->id)->update(["status_id" => 2]);
+
+        return redirect()->route('pesanan.home')->with('success', "Pesanan {$pemesanan->user->name} Untuk Mengendarai {$pemesanan->kendaraan->nama} Disetujui Tahap 1 ");
+    }
+
+    public function setuju2(Pemesanan $pemesanan) {
+        Pemesanan::where("id", $pemesanan->id)->delete();
+
+        return redirect()->route('pesanan.home')->with('success', "Pesanan {$pemesanan->user->name} Untuk Mengendarai {$pemesanan->kendaraan->nama} Disetujui");
+    }
+
+    public function tolak(Pemesanan $pemesanan) {
+        Pemesanan::where("id", $pemesanan->id)->delete();
+
+        return redirect()->route('pesanan.home')->with('success', "Pesanan {$pemesanan->user->name} Untuk Mengendarai {$pemesanan->kendaraan->nama} Ditolak");
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Kendaraan;
+use App\Models\{Kendaraan, Pemesanan};
 
 class KendaraanController extends Controller
 {

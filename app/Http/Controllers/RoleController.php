@@ -12,7 +12,7 @@ class RoleController extends Controller
             "active" => "role",
             "path" => ["Role", "Home"],
             "title" => "Role | Home",
-            "role" => Role::whereNotIn('role', ['Driver', 'Super'])->get(),
+            "role" => Role::whereNotIn('role', ['Super'])->get(),
             "aAtas" => [
                 'url' => route('role.create'),
                 'icon' => 'bx bx-plus',

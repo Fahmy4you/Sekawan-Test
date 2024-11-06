@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
+
 <h1 class="judulPage">Tambahkan Data Pesanan</h1>
 @if($kendaraan == "[]") 
 <h4>Data Kendaraan Tidak Ada Atau Dipesan Semua Tambahkan Terlebih Dahulu</h4>

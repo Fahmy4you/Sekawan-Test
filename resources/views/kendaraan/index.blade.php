@@ -33,7 +33,7 @@
                         <form class="formDelete" action="{{ route('kendaraan.hapus', ['kendaraan' => $k->id]) }}" method="post">
                             @method('delete')
                             @csrf
-                            <button onclick="confirm('Apakah Anda Yakin Menghapus Data {{$kendaraan->nama}}')" type="submit" class="status danger">Delete</a>
+                            <button onclick="confirm('Apakah Anda Yakin Menghapus Data {{$k->nama}}')" type="submit" class="status danger">Delete</a>
                         </form>
                     </td>
                 </tr>

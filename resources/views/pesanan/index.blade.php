@@ -44,8 +44,26 @@
                         @endif">{{ $p->status->status }}</span>
                     </td>
                     <td>
-                        <a class="status completed">Setuju</a>
-                        <a class="status danger">Tolak</a>
+                        @if($p->status->id == 1)
+                            <form class="formDelete" action="{{ route('pesanan.setuju', ['pemesanan' => $p->id]) }}" method="post">
+                                @method('put')
+                                @csrf
+                                <button onclick="confirm('Setuju Kendaraan {{ $p->kendaraan->nama }} Dipakai {{ $p->user->role->role }} {{ $p->user->name }}')" type="submit" class="status completed">Setuju</a>
+                        </form>
+
+                        @elseif($p->status->id == 2)
+                            <form class="formDelete" action="{{ route('pesanan.setuju2', ['pemesanan' => $p->id]) }}" method="post">
+                                @method('delete')
+                                @csrf
+                                <button onclick="confirm('Setuju Kendaraan {{ $p->kendaraan->nama }} Dipakai {{ $p->user->role->role }} {{ $p->user->name }}')" type="submit" class="status completed">Setuju</a>
+                        </form>
+                        @endif
+
+                            <form class="formDelete" action="{{ route('pesanan.tolak', ['pemesanan' => $p->id]) }}" method="post">
+                                @method('delete')
+                                @csrf
+                                <button onclick="confirm('Setuju Kendaraan {{ $p->kendaraan->nama }} Dipakai {{ $p->user->role->role }} {{ $p->user->name }}')" type="submit" class="status danger">Tolak</a>
+                        </form>
                     </td>
                 </tr>
                 @endforeach
