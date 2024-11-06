@@ -43,4 +43,30 @@ class RoleController extends Controller
           
           return redirect()->route('role.home')->with('success', 'Role Baru Ditambahkan');
     }
+    
+    public function edit(Role $role) {
+        return view('role.edit', [
+            "active" => "role",
+            "path" => ["Role", "Edit"],
+            "title" => "Role | Edit",
+            "role" => $role,
+            "aAtas" => [
+                'url' => route('role.home'),
+                'icon' => 'bx bx-left-arrow-alt',
+                'text' => "Back To Table",
+            ],
+        ]);
+    }
+
+    public function editPost(Request $request, Role $role) {
+        $validatedData = $request->validate([
+            'role' => 'required|unique:roles,role,' . $role->id,
+        ]);
+
+        Role::where('id', $role->id)
+            ->update($validatedData);
+      
+        return redirect()->route('role.home')->with('success', 'Role Berhasil Dirubah');
+    }
+    
 }

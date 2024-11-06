@@ -29,8 +29,12 @@
                     <td>{{ $k->nama }}</td>
                     <td>{{ $k->plat }}</td>
                     <td>
-                        <a class="status completed">Edit</a>
-                        <a class="status danger">Delete</a>
+                        <a class="status completed" href="{{ route('kendaraan.edit', ['kendaraan' => $k->id]) }}">Edit</a>
+                        <form class="formDelete" action="{{ route('kendaraan.hapus', ['kendaraan' => $k->id]) }}" method="post">
+                            @method('delete')
+                            @csrf
+                            <button onclick="confirm('Apakah Anda Yakin Menghapus Data {{$kendaraan->nama}}')" type="submit" class="status danger">Delete</a>
+                        </form>
                     </td>
                 </tr>
                 @endforeach

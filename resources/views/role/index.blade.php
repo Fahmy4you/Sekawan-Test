@@ -27,8 +27,7 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $r->role }}</td>
                     <td>
-                        <a class="status completed">Edit</a>
-                        <a class="status danger">Delete</a>
+                        <a class="status completed" href="{{ route('role.edit', ['role' => $r->id]) }}">Edit</a>
                     </td>
                 </tr>
                 @endforeach

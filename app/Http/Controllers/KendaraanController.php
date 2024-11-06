@@ -44,4 +44,42 @@ class KendaraanController extends Controller
           
           return redirect()->route('kendaraan.home')->with('success', 'Kendaraan Baru Ditambahkan');
     }
+    
+    public function edit(Kendaraan $kendaraan) {
+        return view('kendaraan.edit', [
+            "active" => "kendaraan",
+            "path" => ["Kendaraan", "Edit"],
+            "title" => "Kendaraan | Edit",
+            "kendaraan" => $kendaraan,
+            "aAtas" => [
+                'url' => route('kendaraan.home'),
+                'icon' => 'bx bx-left-arrow-alt',
+                'text' => "Back To Table",
+            ],
+        ]);
+    }
+
+    public function editPost(Request $request, Kendaraan $kendaraan) {
+        $validatedData = $request->validate([
+            'nama' => 'required|max:100',
+            'plat' => 'required|unique:kendaraans,plat,' . $kendaraan->id,
+        ]);
+
+        Kendaraan::where('id', $kendaraan->id)
+            ->update($validatedData);
+      
+        return redirect()->route('kendaraan.home')->with('success', 'Kendaraan Berhasil Dirubah');
+        
+    }
+    
+    public function hapus(Kendaraan $kendaraan) {
+        $pemesanan = Pemesanan::where("kendaraan_id", $kendaraan->id);
+        
+        if($pemesanan->exists()) {
+            $pemesanan->delete();
+        }
+
+        Kendaraan::where("id", $kendaraan->id)->delete();
+        return redirect()->route('kendaraan.home')->with('success', 'Kendaraan Berhasil Dihapus');
+    }
 }

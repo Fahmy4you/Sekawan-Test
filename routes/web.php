@@ -22,11 +22,17 @@ Route::delete('/user/{user}/hapus', [UserController::class, 'hapus'])->name("use
 Route::get('/role/', [RoleController::class, 'index'])->name("role.home");
 Route::get('/role/create', [RoleController::class, 'create'])->name("role.create");
 Route::post('/role/create', [RoleController::class, 'createPost'])->name("role.createPost");
+Route::get('/role/{role}/edit', [RoleController::class, 'edit'])->name("role.edit");
+Route::put('/role/{role}/edit', [RoleController::class, 'editPost'])->name("role.editPost");
+
 
 // KENDARAAN ROUTE
 Route::get('/kendaraan/', [KendaraanController::class, 'index'])->name("kendaraan.home");
 Route::get('/kendaraan/create', [KendaraanController::class, 'create'])->name("kendaraan.create");
-Route::post('/Kendaraan/create', [KendaraanController::class, 'createPost'])->name("kendaraan.createPost");
+Route::post('/kendaraan/create', [KendaraanController::class, 'createPost'])->name("kendaraan.createPost");
+Route::get('/kendaraan/{kendaraan}/edit', [KendaraanController::class, 'edit'])->name("kendaraan.edit");
+Route::put('/kendaraan/{kendaraan}/edit', [UserController::class, 'editPost'])->name("kendaraan.editPost");
+Route::delete('/kendaraan/{kendaraan}/hapus', [KendaraanController::class, 'hapus'])->name("kendaraan.hapus");
 
 // PESANAN ROUTE
 Route::get('/pesanan/', [PemesananController::class, 'index'])->name("pesanan.home");
