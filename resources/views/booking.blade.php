@@ -6,12 +6,12 @@
     @if($bookings != "[]")
         @foreach($bookings as $booking)
         <div class="card">
-            <h1>TRUK TELOLET</h1>
-            <p>PLAT : S 4545 D</p>
+            <h1>{{ $booking->kendaraan->nama }}</h1>
+            <p>PLAT : {{ $booking->kendaraan->plat }}</p>
             <p>Status : <span class="disetujui">Disetujui</span></p>
-            <div class="button">
+            <form class="button">
                 <button>Sudahi Pemakaian</button>
-            </div>
+            </form>
         </div>
         @endforeach
     @else 

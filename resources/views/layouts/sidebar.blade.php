@@ -23,7 +23,7 @@
             <li class="{{ ($active === "kendaraan") ? 'active' : '' }}"><a href="{{ route('kendaraan.home') }}"><i class='bx bx-car'></i>Kendaraan</a></li>
             @endif
             
-            @if (!Gate::any(['sopir']))
+            @if (!Gate::any(['sopir', 'admin']))
             <li class="{{ ($active === "pesanan") ? 'active' : '' }}"><a href="{{ route('pesanan.home') }}"><i class='bx bx-message-alt-edit'></i>Pesanan</a></li>
             @endif
             
