@@ -647,88 +647,6 @@ body.auth .card p a {
    margin-bottom: 0;
 }
 
-@media screen and (max-width: 768px) {
-    .sidebar{
-        width: 200px;
-    }
-
-    .content{
-        width: calc(100% - 60px);
-        left: 200px;
-    }
-
-    body.auth .card {
-        padding: 20px 30px;
-    }
-    body.auth .card .inputDiv input {
-        width: 400px;
-    }
-
-}
-
-@media screen and (max-width: 576px) {
-    .formData {
-        width: 100%;
-      }
-      .formData .buttonDiv button
-      {
-        width: 100%;
-      }
-    
-    .content nav form .form-input input{
-        display: none;
-    }
-
-    .content nav form .form-input button{
-        width: auto;
-        height: auto;
-        background: transparent;
-        color: var(--dark);
-        border-radius: none;
-    }
-
-    .content nav form.show .form-input input{
-        display: block;
-        width: 100%;
-    }
-
-    .content nav form.show .form-input button{
-        width: 36px;
-        height: 100%;
-        color: var(--light);
-        background: var(--danger);
-        border-radius: 0 36px 36px 0;
-    }
-
-    .content nav form.show~.notif, .content nav form.show~.profile{
-        display: none;
-    }
-
-    .content main .insights {
-        grid-template-columns: 1fr;
-    }
-
-    .content main .bottom-data .header{
-        min-width: 340px;
-    }
-
-    .content main .bottom-data .orders table{
-        min-width: 340px;
-    }
-
-    .content main .bottom-data .reminders .task-list{
-        min-width: 340px;
-    }
-
-    body.auth .card {
-        padding: 20px 30px;
-    }
-    body.auth .card .inputDiv input {
-        width: 300px;
-    }
-
-}
-
 .formData {
     width: 60%;
   }
@@ -937,3 +855,161 @@ body.auth .iconMode.active i:nth-child(2) {
     transform: rotate(360deg);
     color: var(--textWhite);
   }
+
+.bookingCard {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 10px;
+    margin-top: 20px;
+}
+.bookingCard .card {
+    background-color: var(--light);
+    padding: 5px 20px;
+    border-radius: 10px;
+}
+.bookingCard .card h1 {
+    font-size: 25px;
+}
+.bookingCard .card p:nth-child(2) {
+    font-size: 15px;
+    color: var(--text);
+}
+.bookingCard .card p:nth-child(3) {
+    margin-bottom: 10px;
+    font-size: 13.5px;
+}
+.bookingCard .card p span {
+    font-weight: 500;
+    color: var(--aHover);
+}
+.bookingCard .card p span.pending {
+    color: var(--warning);
+}
+.bookingCard .card p span.tahap1 {
+    color: var(--primary);
+}
+.bookingCard .card p span.disetujui {
+    color: var(--success);
+}
+
+.bookingCard .card .button {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 5px;
+}
+.bookingCard .card .button button {
+    background: var(--danger);
+    border: none;
+    padding: 5px 10px;
+    color: var(--text);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+.bookingCard .card .button button:hover,
+.bookingCard .card .button button:active {
+    transform: scale(.9);
+}
+
+.container-dashboard {
+    margin-top: 10px;
+    padding-bottom: 50px;
+    width: 100%;
+}
+
+.container-dashboard canvas {
+    margin-top: 30px;
+}
+.container-dashboard .titleGrafik {
+    margin-top: 30px;
+}
+
+@media screen and (max-width: 1024px) {
+    .bookingCard {
+        grid-template-columns: auto auto;
+    }
+}
+@media screen and (max-width: 768px) {
+    .sidebar{
+        width: 200px;
+    }
+
+    .content{
+        width: calc(100% - 60px);
+        left: 200px;
+    }
+
+    body.auth .card {
+        padding: 20px 30px;
+    }
+    body.auth .card .inputDiv input {
+        width: 400px;
+    }
+
+    .bookingCard {
+        grid-template-columns: auto;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .formData {
+        width: 100%;
+      }
+      .formData .buttonDiv button
+      {
+        width: 100%;
+      }
+    
+    .content nav form .form-input input{
+        display: none;
+    }
+
+    .content nav form .form-input button{
+        width: auto;
+        height: auto;
+        background: transparent;
+        color: var(--dark);
+        border-radius: none;
+    }
+
+    .content nav form.show .form-input input{
+        display: block;
+        width: 100%;
+    }
+
+    .content nav form.show .form-input button{
+        width: 36px;
+        height: 100%;
+        color: var(--light);
+        background: var(--danger);
+        border-radius: 0 36px 36px 0;
+    }
+
+    .content nav form.show~.notif, .content nav form.show~.profile{
+        display: none;
+    }
+
+    .content main .insights {
+        grid-template-columns: 1fr;
+    }
+
+    .content main .bottom-data .header{
+        min-width: 340px;
+    }
+
+    .content main .bottom-data .orders table{
+        min-width: 340px;
+    }
+
+    .content main .bottom-data .reminders .task-list{
+        min-width: 340px;
+    }
+
+    body.auth .card {
+        padding: 20px 30px;
+    }
+    body.auth .card .inputDiv input {
+        width: 300px;
+    }
+
+}

@@ -12,7 +12,7 @@ class PemesananController extends Controller
             "active" => "pesanan",
             "path" => ["Pesanan", "Home"],
             "title" => "Pesanan | Home",
-            "pesanan" => Pemesanan::all(),
+            "pesanan" => Pemesanan::where('status_id', '!=', 6)->get(),
             "aAtas" => [
                 'url' => route('pesanan.create'),
                 'icon' => 'bx bx-plus',
@@ -60,17 +60,21 @@ class PemesananController extends Controller
 
     public function setuju(Pemesanan $pemesanan) {
         Pemesanan::where("id", $pemesanan->id)->update(["status_id" => 2]);
-
+        
         return redirect()->route('pesanan.home')->with('success', "Pesanan {$pemesanan->user->name} Untuk Mengendarai {$pemesanan->kendaraan->nama} Disetujui Tahap 1 ");
     }
-
+    
     public function setuju2(Pemesanan $pemesanan) {
-        Pemesanan::where("id", $pemesanan->id)->delete();
+        Pemesanan::where("id", $pemesanan->id)->update(["status_id" => 6]);
 
         return redirect()->route('pesanan.home')->with('success', "Pesanan {$pemesanan->user->name} Untuk Mengendarai {$pemesanan->kendaraan->nama} Disetujui");
     }
 
     public function tolak(Pemesanan $pemesanan) {
+        if($pemesanan->status_id == 6) {
+            return abort(403);
+        }
+
         Pemesanan::where("id", $pemesanan->id)->delete();
 
         return redirect()->route('pesanan.home')->with('success', "Pesanan {$pemesanan->user->name} Untuk Mengendarai {$pemesanan->kendaraan->nama} Ditolak");

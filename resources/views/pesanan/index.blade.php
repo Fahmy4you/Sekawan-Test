@@ -36,9 +36,7 @@
                         @elseif(strtolower($p->status->status) == 'belum direspon')
                          pending
                         @elseif(strtolower($p->status->status) == 'setuju tahap 1')
-                         process 
-                        @elseif(strtolower($p->status->status) == 'ditolak')
-                         danger 
+                         process  
                         @else 
                          pending
                         @endif">{{ $p->status->status }}</span>

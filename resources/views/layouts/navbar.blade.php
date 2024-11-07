@@ -9,7 +9,7 @@
             </a>
             <form action="{{ route('auth.logout') }}" method="post">
                 @csrf
-                <button class="logoutNav"><i class='bx bx-log-out-circle'></i></button>
+                <button class="logoutNav" onclick="confirm('Apakah Anda Yakin Akan Log Out ?')"><i class='bx bx-log-out-circle'></i></button>
             </form>
         </nav>
 

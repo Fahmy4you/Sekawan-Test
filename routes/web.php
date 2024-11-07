@@ -3,19 +3,25 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{AuthController ,HomeDashboardController, UserController, RoleController, KendaraanController, PemesananController, RiwayatController};
 
-// AUTH ROUTE
-Route::get('/login', [AuthController::class, 'login'])->name('auth.login');
-Route::post('/login', [AuthController::class, 'loginPost'])->name('auth.loginPost');
-Route::get('/register', [AuthController::class, 'register'])->name('auth.register');
-Route::post('/register', [AuthController::class, 'registerPost'])->name('auth.registerPost');
-Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+Route::middleware(['guest'])->group(function () {
+    // AUTH ROUTE
+    Route::get('/login', [AuthController::class, 'login'])->name('auth.login');
+    Route::post('/login', [AuthController::class, 'loginPost'])->name('auth.loginPost');
+    Route::get('/register', [AuthController::class, 'register'])->name('auth.register');
+    Route::post('/register', [AuthController::class, 'registerPost'])->name('auth.registerPost');
+});
 
 Route::middleware(['auth'])->group(function () {
+    // AUTH ROUTE
+    Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+    
     // DASHBOARD ROUTE
     Route::get('/', [HomeDashboardController::class, 'index'])->name('dashboard.home');
-    Route::get('/booking', [HomeDashboardController::class, 'booking'])->name('dashboard.booking');
-    Route::get('/booking/create', [HomeDashboardController::class, 'bookingCreate'])->name('dashboard.bookingCreate');
-
+    Route::middleware(['can:sopir|admin'])->group(function () {
+        Route::get('/booking', [HomeDashboardController::class, 'booking'])->name('dashboard.booking');
+        Route::get('/booking/create', [HomeDashboardController::class, 'bookingCreate'])->name('dashboard.bookingCreate');
+    });
+    
     // USERS ROUTE
     Route::get('/user/', [UserController::class, 'index'])->name("user.home");
     Route::get('/user/create', [UserController::class, 'create'])->name("user.create");
