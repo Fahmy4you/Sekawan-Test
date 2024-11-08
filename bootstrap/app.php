@@ -13,7 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->redirectGuestsTo(fn (Request $request) => route('auth.login'));
-        //
+        $middleware->alias([
+            'cekRole' => \App\Http\Middleware\cekBeberapaRole::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

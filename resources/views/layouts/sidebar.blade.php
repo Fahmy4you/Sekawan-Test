@@ -7,7 +7,7 @@
         <ul class="side-menu">
             <li class="{{ ($active === "dashboard") ? 'active' : '' }}"><a href="{{ route('dashboard.home') }}"><i class='bx bxs-dashboard'></i>Dashboard</a></li>
             
-            @can('sopir')
+            @canany(["sopir", "super"])
             <li class="{{ ($active === "booking") ? 'active' : '' }}"><a href="{{ route('dashboard.booking') }}"><i class='bx bxs-car-garage'></i>Booking</a></li>
             @endcan
             
@@ -19,17 +19,17 @@
             <li class="{{ ($active === "role") ? 'active' : '' }}"><a href="{{ route('role.home') }}"><i class='bx bx-child'></i>Role</a></li>
             @endcan
             
-            @if (Gate::any(['admin', 'super']))
+            @canany(["admin", "super"])
             <li class="{{ ($active === "kendaraan") ? 'active' : '' }}"><a href="{{ route('kendaraan.home') }}"><i class='bx bx-car'></i>Kendaraan</a></li>
-            @endif
+            @endcan
             
-            @if (!Gate::any(['sopir', 'admin']))
+            @canany(["manager", "supervisor", "super"])
             <li class="{{ ($active === "pesanan") ? 'active' : '' }}"><a href="{{ route('pesanan.home') }}"><i class='bx bx-message-alt-edit'></i>Pesanan</a></li>
-            @endif
+            @endcan
             
-            @if (!Gate::any(['sopir']))
+            @canany(["manager", "supervisor", "admin", "super"])
             <li class="{{ ($active === "riwayat") ? 'active' : '' }}"><a href="{{ route('riwayat.home') }}"><i class='bx bx-stopwatch'></i>Log Riwayat</a></li>
-            @endif
+            @endcan
         </ul>
         <ul class="side-menu">
             <li>

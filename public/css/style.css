@@ -281,6 +281,7 @@ body.auth .card p a {
     color: var(--danger);
     background: transparent;
     border: none;
+    cursor: pointer;
 }
 
 .content{
@@ -332,6 +333,8 @@ body.auth .card p a {
 .content nav .notif{
     font-size: 20px;
     position: relative;
+    cursor: pointer;
+    margin-top: 5px;
 }
 
 .content nav .notif .count{
@@ -908,7 +911,47 @@ body.auth .iconMode.active i:nth-child(2) {
 }
 .bookingCard .card .button button:hover,
 .bookingCard .card .button button:active {
-    transform: scale(.9);
+    transform: scale(.95);
+}
+
+.notificationDash {
+    position: absolute;
+    top: 5rem;
+    right: 5rem;
+    z-index: 10;
+    width: 300px;
+    height: 300px;
+    background: var(--grey);
+    box-shadow: .5px .5px 3px var(--shadow);
+    padding: 10px 20px;
+    overflow-y: auto;
+    border-radius: 10px;
+    transform: translateX(1000px);
+    transition: all .5s ease-in-out;
+}
+.notificationDash.activeNotif {
+    transform: translateX(0);
+}
+.notificationDash::-webkit-scrollbar {
+    display: none;
+}
+.notifCard {
+    border-bottom: .5px solid var(--aHover);
+    padding: 3px 0;
+}
+.notifCard:last-child {
+    border-bottom: none;
+}
+.notifCard h3 {
+    font-size: 16px;
+}
+.notifCard p {
+    font-size: 13px;
+}
+.notifCard p:nth-child(3) {
+    font-size: 12px;
+    color: var(--dark-grey);
+    margin-top: 5px;
 }
 
 .container-dashboard {

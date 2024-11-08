@@ -16,12 +16,12 @@
 @else
 <form action="{{ route('pesanan.createPost') }}" method="post" class="formData">
     @csrf
-    <select name="user_id" id="" @error('user') style="--aHover: #D32F2F;" @enderror>
+    <select name="user_id" id="" @error('user_id') style="--aHover: #D32F2F;" @enderror>
         @foreach($users as $user)
             <option value="{{ $user->id }}">{{ $user->name }}</option>
         @endforeach
     </select>
-    <select name="kendaraan_id" id="" @error('user') style="--aHover: #D32F2F;" @enderror>
+    <select name="kendaraan_id" id="" @error('kendaraan_id') style="--aHover: #D32F2F;" @enderror>
         @foreach($kendaraan as $k)
             <option value="{{ $k->id }}">{{ $k->nama }}</option>
         @endforeach

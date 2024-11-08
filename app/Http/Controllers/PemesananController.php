@@ -30,7 +30,7 @@ class PemesananController extends Controller
                         ->whereNull('pemesanans.id')
                         ->select('users.*')
                         ->whereHas('role', function ($query) {
-                            $query->where('id', '1');
+                            $query->where('id', [1,6]);
                         })
                         ->get(),
             "kendaraan" => Kendaraan::leftJoin('pemesanans', 'kendaraans.id', '=', 'pemesanans.kendaraan_id')

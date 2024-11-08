@@ -12,6 +12,14 @@
 <body>
   @include('layouts.sidebar')
   
+  <div class="notificationDash">
+    <div class="notifCard">
+      <h3>Notif Cob 2</h3>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, consequatur?</p>
+      <p>27-03-2004 13:05</p>
+    </div>
+  </div>
+
   <!-- Main Content -->
   <div class="content">
     @include('layouts.navbar')

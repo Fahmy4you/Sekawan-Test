@@ -48,3 +48,7 @@ toggler.addEventListener('change', function () {
         localStorage.setItem('dark-mode', 'false');
     }
 });
+
+document.querySelector('.notifBell').addEventListener('click', () => {
+    document.querySelector('.notificationDash').classList.toggle('activeNotif');
+})

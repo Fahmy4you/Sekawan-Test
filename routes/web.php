@@ -17,9 +17,11 @@ Route::middleware(['auth'])->group(function () {
     
     // DASHBOARD ROUTE
     Route::get('/', [HomeDashboardController::class, 'index'])->name('dashboard.home');
-    Route::middleware(['can:sopir'])->group(function () {
+    Route::middleware(['cekRole:sopir,super'])->group(function () {
         Route::get('/booking', [HomeDashboardController::class, 'booking'])->name('dashboard.booking');
         Route::get('/booking/create', [HomeDashboardController::class, 'bookingCreate'])->name('dashboard.bookingCreate');
+        Route::post('/booking/create', [HomeDashboardController::class, 'bookingCreatePost'])->name('dashboard.bookingCreatePost');
+        Route::delete('/booking/delete', [HomeDashboardController::class, 'bookingDelete'])->name('dashboard.bookingDelete');
     });
     
     Route::middleware(['can:super'])->group(function () {
@@ -41,7 +43,7 @@ Route::middleware(['auth'])->group(function () {
       Route::put('/role/{role}/edit', [RoleController::class, 'editPost'])->name("role.editPost");
     });
 
-    Route::middleware(['can:admin', 'can:super'])->group(function () {
+    Route::middleware(['cekRole:admin,super'])->group(function () {
       // KENDARAAN ROUTE
       Route::get('/kendaraan/', [KendaraanController::class, 'index'])->name("kendaraan.home");
       Route::get('/kendaraan/create', [KendaraanController::class, 'create'])->name("kendaraan.create");
@@ -49,8 +51,9 @@ Route::middleware(['auth'])->group(function () {
       Route::get('/kendaraan/{kendaraan}/edit', [KendaraanController::class, 'edit'])->name("kendaraan.edit");
       Route::put('/kendaraan/{kendaraan}/edit', [KendaraanController::class, 'editPost'])->name("kendaraan.editPost");
       Route::delete('/kendaraan/{kendaraan}/hapus', [KendaraanController::class, 'hapus'])->name("kendaraan.hapus");
+    });
       
-    Route::middleware(['can:manager', 'can:supervisor', 'can:super'])->group(function () {
+    Route::middleware(['cekRole:manager,supervisor,super'])->group(function () {
       // PESANAN ROUTE
       Route::get('/pesanan/', [PemesananController::class, 'index'])->name("pesanan.home");
       Route::get('/pesanan/create', [PemesananController::class, 'create'])->name("pesanan.create");
@@ -58,8 +61,9 @@ Route::middleware(['auth'])->group(function () {
       Route::put('/pesanan/{pemesanan}/setuju', [PemesananController::class, 'setuju'])->name("pesanan.setuju");
       Route::delete('/pesanan/{pemesanan}/setuju2', [PemesananController::class, 'setuju2'])->name("pesanan.setuju2");
       Route::delete('/pesanan/{pemesanan}/tolak', [PemesananController::class, 'tolak'])->name("pesanan.tolak");
-    
-    Route::middleware(['can:admin', 'can:super', 'can:supervisor', 'can:manager'])->group(function () {
+    });
+
+    Route::middleware(['cekRole:admin,super,supervisor,manager'])->group(function () {
       // RIWAYAT ROUTE
       Route::get('/riwayat/', [RiwayatController::class, 'index'])->name("riwayat.home");
     });

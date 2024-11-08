@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Pemesanan;
-use App\Models\Riwayat;
+use App\Models\{Pemesanan, Riwayat, Kendaraan};
 use Carbon\Carbon;
 
 class HomeDashboardController extends Controller
@@ -49,7 +48,7 @@ class HomeDashboardController extends Controller
     }
     
     public function booking() {
-        return view('booking', [
+        return view('booking.index', [
             "active" => "booking",
             "path" => ["Booking", "Home"],
             "title" => "Booking | Home",
@@ -63,15 +62,42 @@ class HomeDashboardController extends Controller
     }
 
     public function bookingCreate() {
-        return view('booking', [
+        $cekPesanan = Pemesanan::where("user_id", auth()->user()->id);
+
+        if($cekPesanan->exists()) {
+            $kendaraan = false;
+        } else {
+            $kendaraan = Kendaraan::leftJoin('pemesanans', 'kendaraans.id', '=', 'pemesanans.kendaraan_id')
+                        ->whereNull('pemesanans.id')
+                        ->select('kendaraans.*')
+                        ->get();
+        }            
+
+        return view('booking.create', [
             "active" => "booking",
             "path" => ["Booking", "Create"],
             "title" => "Booking | Create",
+            "kendaraan" => $kendaraan,
             "aAtas" => [
                 'url' => route('dashboard.booking'),
                 'icon' => 'bx bx-left-arrow-alt',
                 'text' => "Kembali",
             ],
           ]);
+    }
+
+    public function bookingCreatePost(Request $request) {
+
+
+        $validatedData = $request->validate([
+            'kendaraan_id' => 'required',
+          ]);
+
+          $validatedData["user_id"] = auth()->user()->id;
+          $validatedData["status_id"] = 1;
+          dd($validatedData);
+          Pemesanan::create($validatedData);
+          
+          return redirect()->route('booking.home')->with('success', 'Bookingan Anda Ditambahkan Tunggu Disetujui');
     }
 }
