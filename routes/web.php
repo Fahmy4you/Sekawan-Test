@@ -40,7 +40,7 @@ Route::middleware(['auth'])->group(function () {
       Route::get('/role/create', [RoleController::class, 'create'])->name("role.create");
       Route::post('/role/create', [RoleController::class, 'createPost'])->name("role.createPost");
       Route::get('/role/{role}/edit', [RoleController::class, 'edit'])->name("role.edit");
-      Route::put('/role/{role}/edit', [RoleController::class, 'editPost'])->name("role.editPost");
+      Route::put('/role/{role}/edit/{roleLama}', [RoleController::class, 'editPost'])->name("role.editPost");
     });
 
     Route::middleware(['cekRole:admin,super'])->group(function () {
@@ -58,9 +58,13 @@ Route::middleware(['auth'])->group(function () {
       Route::get('/pesanan/', [PemesananController::class, 'index'])->name("pesanan.home");
       Route::get('/pesanan/create', [PemesananController::class, 'create'])->name("pesanan.create");
       Route::post('/pesanan/create', [PemesananController::class, 'createPost'])->name("pesanan.createPost");
-      Route::put('/pesanan/{pemesanan}/setuju', [PemesananController::class, 'setuju'])->name("pesanan.setuju");
-      Route::delete('/pesanan/{pemesanan}/setuju2', [PemesananController::class, 'setuju2'])->name("pesanan.setuju2");
       Route::delete('/pesanan/{pemesanan}/tolak', [PemesananController::class, 'tolak'])->name("pesanan.tolak");
+    });
+    Route::middleware(['cekRole:manager,super'])->group(function () {
+      Route::put('/pesanan/{pemesanan}/setuju', [PemesananController::class, 'setuju'])->name("pesanan.setuju");
+    });
+    Route::middleware(['cekRole:supervisor,super'])->group(function () {
+      Route::delete('/pesanan/{pemesanan}/setuju2', [PemesananController::class, 'setuju2'])->name("pesanan.setuju2");
     });
 
     Route::middleware(['cekRole:admin,super,supervisor,manager'])->group(function () {

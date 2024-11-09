@@ -52,6 +52,12 @@ class UserController extends Controller
         $validatedData['password'] = bcrypt($validatedData['password']);
         
         User::create($validatedData);
+
+        $nama = auth()->user()->name;
+        $this->riwayat->create([
+            'category_riwayat_id' => 12,
+            'keterangan' => "User {$nama} Menambahkan User {$validatedData['name']}"
+        ]);
         
         return redirect()->route('user.home')->with('success', 'User Baru Ditambahkan');
     }
@@ -92,6 +98,12 @@ class UserController extends Controller
 
         User::where('id', $user->id)
             ->update($validatedData);
+
+        $nama = auth()->user()->name;
+        $this->riwayat->create([
+            'category_riwayat_id' => 13,
+            'keterangan' => "User {$nama} Mengedit User {$validatedData['name']}"
+        ]);
       
         return redirect()->route('user.home')->with('success', 'User Berhasil Dirubah');
         
@@ -106,6 +118,11 @@ class UserController extends Controller
         }
 
         User::where("id", $user->id)->delete();
+        $nama = auth()->user()->name;
+        $this->riwayat->create([
+            'category_riwayat_id' => 14,
+            'keterangan' => "User {$nama} Menghapus User {$user->name}"
+        ]);
         return redirect()->route('user.home')->with('success', 'User Berhasil Dihapus');
     }
 

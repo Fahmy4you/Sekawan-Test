@@ -2,7 +2,7 @@
 
 @section('content')
 <h1 class="judulPage">Edit Data User</h1>
-<form action="{{ route('kendaraan.editPost', ['kendaraan' => $kendaraan->id]) }}" method="post" class="formData">
+<form action="{{ route('user.editPost', ['user' => $user->id]) }}" method="post" class="formData">
     @csrf
     @method('put')
     <div class="inputDiv">

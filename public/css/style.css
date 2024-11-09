@@ -970,6 +970,21 @@ body.auth .iconMode.active i:nth-child(2) {
     margin-top: 30px;
 }
 
+.riwayat .orders .header .title {
+    display: flex;
+    align-items: center;
+}
+.riwayat .orders .header .title i {
+    margin-right: 20px;
+}
+
+.table-th-riwayat {
+    padding: 0 10px;
+}
+.table-td-riwayat {
+    padding: 0 10px;
+}
+
 @media screen and (max-width: 1024px) {
     .bookingCard {
         grid-template-columns: auto auto;

@@ -100,20 +100,40 @@ class HomeDashboardController extends Controller
 
           $validatedData["user_id"] = auth()->user()->id;
            $validatedData["status_id"] = 1;
+
+           $nama = auth()->user()->name;
+           $kendaraan = Kendaraan::where('id', $validatedData["kendaraan_id"])->first()->nama;
            
           Pemesanan::create($validatedData);
+
+          $this->riwayat->create([
+            'category_riwayat_id' => 2,
+            'keterangan' => "User {$nama} Membooking Kendaraan {$kendaraan}"
+          ]);
           
           return redirect()->route('dashboard.booking')->with('success', 'Bookingan Anda Ditambahkan Tunggu Disetujui');
     }
     
     public function bookingDelete(Pemesanan $pemesanan, $categoryId) {
       if($pemesanan->user_id != auth()->user()->id) {
-        return abort(403, "This Booking Is Not Yours")
+        return abort(403, "This Booking Is Not Yours");
       }
       
       $pesan = ($categoryId == 1 ? "Bookingan Anda Telah Dibatalkan" : "Bookingan Anda Telah Disudahi Pemakaiannya");
       
       Pemesanan::where("id", $pemesanan->id)->delete();
+
+      $nama = auth()->user()->name;
+      $kendaraan = $pemesanan->kendaraan->nama;
+      $riwayatData = [];
+      if($categoryId == 1) {
+        $riwayatData = ['category_riwayat_id' => 16, 'keterangan' => "User {$nama} Membatalkan Bookingan Kendaraan {$kendaraan}"];
+    } else {
+          $riwayatData = ['category_riwayat_id' => 15, 'keterangan' => "User {$nama} Mengsudahi Bookingan Kendaraan {$kendaraan}"];
+
+      }
+      
+      $this->riwayat->create($riwayatData);
 
         return redirect()->route('dashboard.booking')->with('success', $pesan);
     }

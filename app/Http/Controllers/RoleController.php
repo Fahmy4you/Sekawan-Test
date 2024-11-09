@@ -40,6 +40,13 @@ class RoleController extends Controller
           ]);
           
           Role::create($validatedData);
+
+          $nama = auth()->user()->name;
+          $role = $validatedData['role'];
+          $this->riwayat->create([
+            'category_riwayat_id' => 9,
+            'keterangan' => "User {$nama} Menambahkan Role Baru Yaitu {$role}"
+          ]);
           
           return redirect()->route('role.home')->with('success', 'Role Baru Ditambahkan');
     }
@@ -58,13 +65,20 @@ class RoleController extends Controller
         ]);
     }
 
-    public function editPost(Request $request, Role $role) {
+    public function editPost(Request $request, Role $role, $roleLama) {
         $validatedData = $request->validate([
             'role' => 'required|unique:roles,role,' . $role->id,
         ]);
 
         Role::where('id', $role->id)
             ->update($validatedData);
+
+        $nama = auth()->user()->name;
+        $role = $validatedData['role'];
+        $this->riwayat->create([
+            'category_riwayat_id' => 9,
+            'keterangan' => "User {$nama} Mengubah Role {$roleLama} Menjadi {$role}"
+        ]);
       
         return redirect()->route('role.home')->with('success', 'Role Berhasil Dirubah');
     }

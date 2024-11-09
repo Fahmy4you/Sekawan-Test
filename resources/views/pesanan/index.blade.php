@@ -25,45 +25,73 @@
             </thead>
             <tbody>
                 @foreach($pesanan as $p)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $p->kendaraan->nama }}</td>
-                    <td>{{ $p->user->name }}</td>
-                    <td>
-                        <span class="status 
-                        @if(strtolower($p->status->status) == 'disetujui')
-                         completed 
-                        @elseif(strtolower($p->status->status) == 'belum direspon')
-                         pending
-                        @elseif(strtolower($p->status->status) == 'setuju tahap 1')
-                         process  
-                        @else 
-                         pending
-                        @endif">{{ $p->status->status }}</span>
-                    </td>
-                    <td>
-                        @if($p->status->id == 1)
-                            <form class="formDelete" action="{{ route('pesanan.setuju', ['pemesanan' => $p->id]) }}" method="post">
-                                @method('put')
-                                @csrf
-                                <button onclick="confirm('Setuju Kendaraan {{ $p->kendaraan->nama }} Dipakai {{ $p->user->role->role }} {{ $p->user->name }}')" type="submit" class="status completed">Setuju</a>
-                        </form>
+                    @if($p->status->id == 1)
+                    @canany(["manager", "super"])
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $p->kendaraan->nama }}</td>
+                        <td>{{ $p->user->name }}</td>
+                        <td>
+                            <span class="status 
+                            @if(strtolower($p->status->status) == 'disetujui')
+                            completed 
+                            @elseif(strtolower($p->status->status) == 'belum direspon')
+                            pending
+                            @elseif(strtolower($p->status->status) == 'setuju tahap 1')
+                            process  
+                            @else 
+                            pending
+                            @endif">{{ $p->status->status }}</span>
+                        </td>
+                        <td>
+                                <form class="formDelete" action="{{ route('pesanan.setuju', ['pemesanan' => $p->id]) }}" method="post">
+                                    @method('put')
+                                    @csrf
+                                    <button onclick="confirm('Setuju Kendaraan {{ $p->kendaraan->nama }} Dipakai {{ $p->user->role->role }} {{ $p->user->name }}')" type="submit" class="status completed">Setuju</a>
+                            </form>
 
-                        @elseif($p->status->id == 2)
-                            <form class="formDelete" action="{{ route('pesanan.setuju2', ['pemesanan' => $p->id]) }}" method="post">
-                                @method('delete')
-                                @csrf
-                                <button onclick="confirm('Setuju Kendaraan {{ $p->kendaraan->nama }} Dipakai {{ $p->user->role->role }} {{ $p->user->name }}')" type="submit" class="status completed">Setuju</a>
-                        </form>
-                        @endif
+                                <form class="formDelete" action="{{ route('pesanan.tolak', ['pemesanan' => $p->id]) }}" method="post">
+                                    @method('delete')
+                                    @csrf
+                                    <button onclick="confirm('Setuju Kendaraan {{ $p->kendaraan->nama }} Dipakai {{ $p->user->role->role }} {{ $p->user->name }}')" type="submit" class="status danger">Tolak</a>
+                            </form>
+                        </td>
+                    </tr>
+                    @endcan
+                    @elseif($p->status->id == 2 )
+                    @canany(["supervisor", "super"])
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $p->kendaraan->nama }}</td>
+                        <td>{{ $p->user->name }}</td>
+                        <td>
+                            <span class="status 
+                            @if(strtolower($p->status->status) == 'disetujui')
+                            completed 
+                            @elseif(strtolower($p->status->status) == 'belum direspon')
+                            pending
+                            @elseif(strtolower($p->status->status) == 'setuju tahap 1')
+                            process  
+                            @else 
+                            pending
+                            @endif">{{ $p->status->status }}</span>
+                        </td>
+                        <td>
+                                <form class="formDelete" action="{{ route('pesanan.setuju2', ['pemesanan' => $p->id]) }}" method="post">
+                                    @method('delete')
+                                    @csrf
+                                    <button onclick="confirm('Setuju Kendaraan {{ $p->kendaraan->nama }} Dipakai {{ $p->user->role->role }} {{ $p->user->name }}')" type="submit" class="status completed">Setuju</a>
+                            </form>
 
-                            <form class="formDelete" action="{{ route('pesanan.tolak', ['pemesanan' => $p->id]) }}" method="post">
-                                @method('delete')
-                                @csrf
-                                <button onclick="confirm('Setuju Kendaraan {{ $p->kendaraan->nama }} Dipakai {{ $p->user->role->role }} {{ $p->user->name }}')" type="submit" class="status danger">Tolak</a>
-                        </form>
-                    </td>
-                </tr>
+                                <form class="formDelete" action="{{ route('pesanan.tolak', ['pemesanan' => $p->id]) }}" method="post">
+                                    @method('delete')
+                                    @csrf
+                                    <button onclick="confirm('Setuju Kendaraan {{ $p->kendaraan->nama }} Dipakai {{ $p->user->role->role }} {{ $p->user->name }}')" type="submit" class="status danger">Tolak</a>
+                            </form>
+                        </td>
+                    </tr>
+                    @endcan
+                    @endif
                 @endforeach
             </tbody>
         </table>

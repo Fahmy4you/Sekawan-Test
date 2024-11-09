@@ -41,6 +41,12 @@ class KendaraanController extends Controller
           ]);
           
           Kendaraan::create($validatedData);
+
+          $nama = auth()->user()->name;
+        $this->riwayat->create([
+            'category_riwayat_id' => 3,
+            'keterangan' => "User {$nama} Menambahkan Kendaraan {$validatedData['nama']}"
+        ]);
           
           return redirect()->route('kendaraan.home')->with('success', 'Kendaraan Baru Ditambahkan');
     }
@@ -67,6 +73,12 @@ class KendaraanController extends Controller
 
         Kendaraan::where('id', $kendaraan->id)
             ->update($validatedData);
+
+            $nama = auth()->user()->name;
+            $this->riwayat->create([
+                'category_riwayat_id' => 4,
+                'keterangan' => "User {$nama} Mengubah Kendaraan {$validatedData['nama']}"
+            ]);
       
         return redirect()->route('kendaraan.home')->with('success', 'Kendaraan Berhasil Dirubah');
         
@@ -80,6 +92,12 @@ class KendaraanController extends Controller
         }
 
         Kendaraan::where("id", $kendaraan->id)->delete();
+
+        $nama = auth()->user()->name;
+        $this->riwayat->create([
+            'category_riwayat_id' => 5,
+            'keterangan' => "User {$nama} Menghapus Kendaraan {$kendaraan->nama}"
+        ]);
         return redirect()->route('kendaraan.home')->with('success', 'Kendaraan Berhasil Dihapus');
     }
 }
