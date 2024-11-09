@@ -46,6 +46,11 @@ class AuthController extends Controller
         
         User::create($validatedData);
         
+        $this->riwayat->create([
+          'category_riwayat_id' => 12,
+          'keterangan' => "User Baru Bernama {$validatedData['name']} Terdaftar Melalui Register Page"
+        ]);
+        
         return redirect()->route('auth.login')->with('success', 'Register Berhasil Silahkan Login');
     }
 

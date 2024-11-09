@@ -1,6 +1,11 @@
 @extends('layouts.main')
 
 @section('content')
+@if(session()->has('success'))
+<div class="successAlert booking">
+    <p>{{ session('success') }}</p>
+</div>
+@endif
 
 <div class="bookingCard">
     @if($bookings != "[]")
@@ -19,10 +24,10 @@
             pending
             @endif
             ">{{ $booking->status->status }}</span></p>
-            <form class="button" method="post" action="{{ route('dashboard.bookingDelete') }}">
+            <form class="button" method="post" action="{{ route('dashboard.bookingDelete', ['pemesanan' => $booking->id, 'categoryId' => ($booking->status->id != 6 ? 1 : 2) ]) }}">
                 @method('delete')
                 @csrf
-                <button onclick="confrim('" type="submit">
+                <button onclick="confrim('Anda Yakin Ingin {{ $booking->status->id != 6 ? 'Batalkan Pemakaian' : 'Sudahi Pemakaian'}} Kendaraan {{ $booking->kendaraan->nama }}')" type="submit">
                     {{ $booking->status->id != 6 ? "Batalkan Pemakaian" : "Sudahi Pemakaian"}}
                 </button>
             </form>

@@ -802,6 +802,9 @@ body.auth .card p a {
     padding: 0.5rem 0.75rem;
     margin-top: 10px;
   }
+.successAlert.booking {
+  margin-top: 20px;
+}
 .successAlert.auth {
     font-size: 14px;
     margin-top: 0;
@@ -863,7 +866,7 @@ body.auth .iconMode.active i:nth-child(2) {
     display: grid;
     grid-template-columns: auto auto auto;
     gap: 10px;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 .bookingCard .card {
     background-color: var(--light);

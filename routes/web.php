@@ -21,7 +21,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/booking', [HomeDashboardController::class, 'booking'])->name('dashboard.booking');
         Route::get('/booking/create', [HomeDashboardController::class, 'bookingCreate'])->name('dashboard.bookingCreate');
         Route::post('/booking/create', [HomeDashboardController::class, 'bookingCreatePost'])->name('dashboard.bookingCreatePost');
-        Route::delete('/booking/delete', [HomeDashboardController::class, 'bookingDelete'])->name('dashboard.bookingDelete');
+        Route::delete('/booking/{pemesanan}/delete/{categoryId}', [HomeDashboardController::class, 'bookingDelete'])->name('dashboard.bookingDelete');
     });
     
     Route::middleware(['can:super'])->group(function () {

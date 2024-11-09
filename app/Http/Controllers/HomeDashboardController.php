@@ -87,17 +87,34 @@ class HomeDashboardController extends Controller
     }
 
     public function bookingCreatePost(Request $request) {
+      
+      $cekPesanan = Pemesanan::where("user_id", auth()->user()->id);
 
+        if($cekPesanan->exists()) {
+          return abort(403, "You already have a booking");
+        }
 
         $validatedData = $request->validate([
             'kendaraan_id' => 'required',
           ]);
 
           $validatedData["user_id"] = auth()->user()->id;
-          $validatedData["status_id"] = 1;
-          dd($validatedData);
+           $validatedData["status_id"] = 1;
+           
           Pemesanan::create($validatedData);
           
-          return redirect()->route('booking.home')->with('success', 'Bookingan Anda Ditambahkan Tunggu Disetujui');
+          return redirect()->route('dashboard.booking')->with('success', 'Bookingan Anda Ditambahkan Tunggu Disetujui');
+    }
+    
+    public function bookingDelete(Pemesanan $pemesanan, $categoryId) {
+      if($pemesanan->user_id != auth()->user()->id) {
+        return abort(403, "This Booking Is Not Yours")
+      }
+      
+      $pesan = ($categoryId == 1 ? "Bookingan Anda Telah Dibatalkan" : "Bookingan Anda Telah Disudahi Pemakaiannya");
+      
+      Pemesanan::where("id", $pemesanan->id)->delete();
+
+        return redirect()->route('dashboard.booking')->with('success', $pesan);
     }
 }
