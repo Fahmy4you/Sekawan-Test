@@ -113,6 +113,11 @@ class PemesananController extends Controller
             'category_riwayat_id' => 8,
             'keterangan' => "{$roleName} {$nama} Menolak {$user} Menggunakan Kendaraan {$kendaraan}"
         ]);
+        $this->notification->create([
+            'user_id' => $pemesanan->user->id,
+            'judul' => "Penolakan Booking",
+            'keterangan' => "{$roleName} {$nama} Menolak {$user} Menggunakan Kendaraan {$kendaraan}"
+        ]);
 
         return redirect()->route('pesanan.home')->with('success', "Pesanan {$pemesanan->user->name} Untuk Mengendarai {$pemesanan->kendaraan->nama} Ditolak");
     }

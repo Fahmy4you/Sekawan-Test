@@ -9,26 +9,33 @@
                 <i class='bx bx-stopwatch'></i>
                 <h3>Riwayat</h3>
             </div>
-            <div class="inputTanggal">
-                <input type="date">
-            </div>
+            <form action="{{ route('riwayat.home') }}" method="get" class="inputTanggal">
+                <input type="date" name="date">
+                <button type="submit">Cari</button>
+            </from>
         </div>
+        @if(!$riwayats->isEmpty()) 
         <table>
             <thead>
                 <tr>
                     <th>No</th>
-                    <th class="table-th-riwayat">Keterangan</th>
+                    <th class="th-riwayat">Keterangan</th>
                     <th>Category</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach($riwayats as $riwayat)
                 <tr>
-                    <td>1</td>
-                    <td class="table-td-riwayat">Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident possimus atque at corporis impedit quia ducimus saepe aliquid tempore ut?</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
+                    <td>{{ $loop->iteration }}</td>
+                    <td style="padding: 0 10px;">{{ $riwayat->keterangan }}</td>
+                    <td>{{ $riwayat->category->category }}</td>
                 </tr>   
+                @endforeach
             </tbody>
         </table>
+        @else 
+        <p style="text-align: center; font-weight: 600;">Tidak Ada Data Pada Tanggal {{ $tanggal }}</p>
+        @endif
     </div>
 
 </div>

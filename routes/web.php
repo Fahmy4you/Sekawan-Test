@@ -11,12 +11,13 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/register', [AuthController::class, 'registerPost'])->name('auth.registerPost');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'notifikasi'])->group(function () {
     // AUTH ROUTE
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
     
     // DASHBOARD ROUTE
     Route::get('/', [HomeDashboardController::class, 'index'])->name('dashboard.home');
+    Route::get('/download', [HomeDashboardController::class, 'download'])->name('dashboard.download');
     Route::middleware(['cekRole:sopir,super'])->group(function () {
         Route::get('/booking', [HomeDashboardController::class, 'booking'])->name('dashboard.booking');
         Route::get('/booking/create', [HomeDashboardController::class, 'bookingCreate'])->name('dashboard.bookingCreate');
@@ -70,5 +71,6 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['cekRole:admin,super,supervisor,manager'])->group(function () {
       // RIWAYAT ROUTE
       Route::get('/riwayat/', [RiwayatController::class, 'index'])->name("riwayat.home");
+      Route::get('/riwayat/download', [RiwayatController::class, 'download'])->name("riwayat.excel");
     });
 });

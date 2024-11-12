@@ -13,11 +13,20 @@
   @include('layouts.sidebar')
   
   <div class="notificationDash">
-    <div class="notifCard">
-      <h3>Notif Cob 2</h3>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum, consequatur?</p>
-      <p>27-03-2004 13:05</p>
+    @if(!$dataNotifikasi->isEmpty())
+      @foreach($dataNotifikasi as $notifikasi)
+      <div class="notifCard">
+        <h3>{{ $notifikasi->judul }}</h3>
+        <p>{{ $notifikasi->keterangan }}</p>
+        <p>{{ $notifikasi->created_at }}</p>
+      </div>
+      @endforeach
+    @else 
+    <div style="height: 100%; display: flex; justify-content: center; align-items: center;">
+      <p style="font-weight: 600; font-size: 13px;">Anda Tidak Memiliki Notifikasi Hari Ini</p>
+
     </div>
+    @endif
   </div>
 
   <!-- Main Content -->

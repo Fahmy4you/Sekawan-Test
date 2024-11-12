@@ -5,7 +5,9 @@
             <label for="theme-toggle" class="theme-toggle"></label>
             <a class="notif notifBell">
                 <i class='bx bx-bell'></i>
-                <span class="count">12</span>
+                @if(!$dataNotifikasi->isEmpty())
+                    <span class="count">{{ $dataNotifikasi->count() }}</span>
+                @endif
             </a>
             <form action="{{ route('auth.logout') }}" method="post">
                 @csrf

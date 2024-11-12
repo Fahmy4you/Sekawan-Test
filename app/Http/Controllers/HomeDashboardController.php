@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\{Pemesanan, Riwayat, Kendaraan};
+use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use Carbon\Carbon;
 
 class HomeDashboardController extends Controller
@@ -40,12 +41,54 @@ class HomeDashboardController extends Controller
             "dataGrafikTahun" => $yValues,
             "pesananTerbanyak" => $jumlahPesananTerbanyak,
             "aAtas" => [
-                'url' => route('user.create'),
+                'url' => route('dashboard.download'),
                 'icon' => 'bx bx-cloud',
                 'text' => "Download Data",
             ],
           ]);
     }
+
+  public function download() {
+    $fileName = 'pesanan_per_bulan.xlsx';
+    $riwayat = Riwayat::where('category_riwayat_id', 2)
+        ->get()
+        ->groupBy(function($item) {
+            return Carbon::parse($item->created_at)->format('m'); 
+        });
+
+    $yValues = array_fill(0, 12, 0);
+    $currentMonth = Carbon::now()->month;
+
+    foreach ($riwayat as $month => $items) {
+        $monthIndex = (int)$month - 1;
+        if ($monthIndex < $currentMonth) {
+            $yValues[$monthIndex] = count($items);
+        }
+    }
+
+    $writer = WriterEntityFactory::createXLSXWriter();
+    $writer->openToFile($fileName);
+
+    $headerRow = WriterEntityFactory::createRowFromArray(['Bulan', 'Pesanan']);
+    $writer->addRow($headerRow);
+
+    $months = [
+        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    ];
+
+    for ($i = 0; $i < $currentMonth; $i++) {
+        $row = WriterEntityFactory::createRowFromArray([
+            $months[$i],    
+            $yValues[$i]   
+        ]);
+        $writer->addRow($row);
+    }
+    
+    $writer->close();
+    return response()->download($fileName)->deleteFileAfterSend(true);
+}
+
     
     public function booking() {
         return view('booking.index', [

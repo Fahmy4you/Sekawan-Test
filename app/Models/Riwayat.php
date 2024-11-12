@@ -12,6 +12,6 @@ class Riwayat extends Model
     ];
 
     public function category() {
-        return $this->belongsTo(Category_Riwayat::class);
+        return $this->belongsTo(Category_Riwayat::class, 'category_riwayat_id');
     }
 }
